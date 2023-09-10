@@ -1,11 +1,9 @@
 package com.moha.ebook.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -14,14 +12,18 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_post")
     private long idPost;
 
-    @Column(name = "quote")
-    private String quote;
+    @Column(name = "contenu")
+    private String contenu;
+
+    @Column(name = "date_post")
+    private LocalDate datePost;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_utilisateur")
