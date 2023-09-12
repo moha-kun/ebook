@@ -6,7 +6,6 @@ import com.moha.ebook.dao.UtilisateurRepository;
 import com.moha.ebook.dto.AuthenticationRequest;
 import com.moha.ebook.dto.AuthenticationResponse;
 import com.moha.ebook.dto.RegisterRequest;
-import com.moha.ebook.entities.Role;
 import com.moha.ebook.entities.Token;
 import com.moha.ebook.entities.TokenType;
 import com.moha.ebook.entities.Utilisateur;
@@ -16,10 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -40,7 +36,7 @@ public class AuthenticationService {
                 .lastName(request.getLastName())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .role(Role.ROLE_USER)
+                .role(request.getRole())
                 .build();
         var savedUser = utilisateurRepository.save(utilisateur);
         var jwtToken = jwtService.generateToken(utilisateur);
